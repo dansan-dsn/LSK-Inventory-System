@@ -1,0 +1,18 @@
+.scrollable-sidebar {
+  min-height: 100vh;
+  overflow-y: auto;
+}
+.bg-color {
+  background-color: rgb(77, 77, 79);
+}
+
+/* Product ------- css */
+.hover-dicon:hover {
+  cursor: pointer;
+  background-color: rgb(205, 42, 42) !important;
+}
+
+.hover-eicon:hover {
+  cursor: pointer;
+  background-color: rgb(20, 20, 198) !important;
+}
