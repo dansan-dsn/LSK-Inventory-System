@@ -13,7 +13,8 @@
 
 .profile_rad {
   border-radius: 25px;
-  background-color: rgb(175, 175, 175);
+  background-color: rgb(194, 194, 194);
+  border: 1px rgb(189, 187, 187) solid;
 }
 
 .profile_cursor {
@@ -39,6 +40,12 @@ a .img-logo {
 .icon-h:hover {
   cursor: pointer;
   background-color: rgb(210, 207, 207);
+}
+
+/* dashboard */
+
+.card-lay {
+  border-radius: 1.5rem;
 }
 
 /* Product ------- css */

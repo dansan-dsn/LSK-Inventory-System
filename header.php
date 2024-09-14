@@ -118,9 +118,9 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="profile-pic">
-                                <div class="profile_rad">
+                                <div class="profile_rad d-flex align-items-center justify-content-center">
                                     <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle profile_cursor">
-                                    <i class='bx bx-cog profile_cursor setting_icon'></i>
+                                    <span><i class='bx bx-cog profile_cursor bg-dark text-white p-1 rounded-circle'></i></span>
                                 </div>
                             </a>
                         </li>

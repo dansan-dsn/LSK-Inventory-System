@@ -25,7 +25,7 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          Recently Received Goods
+          Recently Received Product
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Product A - 50 Units - Received</li>
@@ -38,7 +38,7 @@
 
   <!-- Button to add new receipt -->
   <div class="mt-3">
-    <a href="receive-new-goods.php" class="btn btn-primary">Receive New Goods</a>
+    <a href="receive-new-goods.php" class="btn btn-primary">Receive New Products</a>
   </div>
 </div>
 
@@ -46,7 +46,7 @@
              <div class="">
                 <div>
                 <div class="container mt-5">
-  <h3>Receive New Goods</h3>
+  <h3>Receive New Products</h3>
   <form>
     <div class="mb-3">
       <label for="deliveryOrder" class="form-label">Delivery Order Number</label>
@@ -74,7 +74,7 @@
     </div>
     
     <button type="button" class="btn btn-primary">Generate QR Code</button>
-    <button type="submit" class="btn btn-success">Receive Goods</button>
+    <button type="submit" class="btn btn-success">Receive Products</button>
   </form>
 </div>
  </div>
