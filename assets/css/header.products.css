@@ -1,0 +1,68 @@
+/* header css */
+.active {
+  background-color: rgba(230, 230, 230, 0.801) !important;
+}
+
+.scrollable-sidebar {
+  min-height: 100vh;
+  overflow-y: auto;
+}
+.bg-color {
+  background-color: rgb(77, 77, 79);
+}
+
+.profile_rad {
+  border-radius: 25px;
+  background-color: rgb(175, 175, 175);
+}
+
+.profile_cursor {
+  cursor: pointer;
+}
+
+.setting_icon {
+  width: 2em !important;
+  height: 2em !important;
+}
+
+a .img-logo {
+  height: 10px !important;
+  width: 10px !important;
+}
+
+.icon-h {
+  width: 30px !important;
+  height: 30px !important;
+  background-color: rgb(232, 229, 229);
+}
+
+.icon-h:hover {
+  cursor: pointer;
+  background-color: rgb(210, 207, 207);
+}
+
+/* Product ------- css */
+.hover-dicon:hover {
+  cursor: pointer;
+  background-color: rgb(205, 42, 42) !important;
+}
+
+.hover-eicon:hover {
+  cursor: pointer;
+  background-color: rgb(20, 20, 198) !important;
+}
+
+nav ul li.active a {
+  color: purple !important;
+  font-weight: bold !important;
+}
+
+.caret:hover {
+  cursor: pointer;
+}
+
+.new-btn {
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+}

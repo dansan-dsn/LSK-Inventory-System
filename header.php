@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/css/ready.css">
     <link rel="stylesheet" href="assets/css/demo.css">
-    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/header.products.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
@@ -23,13 +23,12 @@
         }
     </style>
 </head>
-
 <body>
     <div class="wrapper">
         <div class="main-header">
             <div class="logo-header">
                 <a href="index" class="logo">
-                    Admin Dashboard
+                    <img src="./assets/img/lsk_logo.jpg" alt="LSK-logo" class="img-fluid" style="max-height: 30px;"/>
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,10 +38,9 @@
             <nav class="navbar navbar-header navbar-expand-lg">
                 <?php $current_page = basename($_SERVER['PHP_SELF']);?>
                 <div class="container-fluid">
-
                     <form class="navbar-left navbar-form nav-search mr-md-3" action="">
                         <div class="input-group">
-                            <input type="text" placeholder="Search ..." class="form-control">
+                            <input type="text" placeholder="Search your product" class="form-control">
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-search search-icon"></i>
@@ -53,7 +51,7 @@
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="la la-envelope"></i>
+                                <i class='bx bx-message-alt-check'></i>
                             </a>
                             <div class="dropdown-menu mt-1" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#">Action</a>
@@ -93,7 +91,7 @@
                                         </a>
                                         <a href="#">
                                             <div class="notif-img">
-                                                <img src="assets/img/profile2.jpg" alt="Img Profile">
+                                                <img src="assets/img/profile.jpg" alt="Img Profile">
                                             </div>
                                             <div class="notif-content">
                                                 <span class="block">
@@ -120,8 +118,10 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="profile-pic">
-                                <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle">
-                                <span>Hizrian</span>
+                                <div class="profile_rad">
+                                    <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle profile_cursor">
+                                    <i class='bx bx-cog profile_cursor setting_icon'></i>
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -130,20 +130,6 @@
         </div>
         <div class="sidebar">
             <div class="scrollbar-inner sidebar-wrapper ">
-                <div class="user">
-                    <div class="photo">
-                        <img src="assets/img/profile.jpg">
-                    </div>
-                    <div class="info">
-                        <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                            <span>
-                                Hizrian
-                                <span class="user-level">Administrator</span>
-                            </span>
-                        </a>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
                 <ul class="nav scrollable-sidebar">
                     <li class="nav-item <?= ($current_page == 'index.php') ? 'active' : '' ?>">
                         <a href="<?=SITE_URL?>/admin-dash">
@@ -151,46 +137,40 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item <?= ($current_page == "products.php") ? 'active' : '' ?>">
-                        <a href="./products.php">
-                            <i class="la la-cart-plus"></i>
-                            <p>Products Management</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="news">
+                    <li class="nav-item <?=($current_page == "receiving.module.php") ? 'active' : "" ?>">
+                        <a href="./receiving.module.php">
                             <i class="la la-newspaper-o"></i>
-                            <p>Sales</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="gallery">
-                        <i class='bx bx-note'></i>
-                        <p>Orders</p>
+                            <p>Recieving Module</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="members">
                             <i class="la la-users"></i>
-                            <p>Suppliers</p>
+                            <p>Stock levels</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="volunteers">
-                            <i class="la la la-user-plus"></i>
-                            <p>Customers</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="icons">
-                            <i class="la la-pencil-square"></i>
-                            <p>Reports</p>
+                    <li class="nav-item <?= ($current_page == "products.php") ? 'active' : ''?>">
+                        <a href="./products.php">
+                        <i class="la la-cart-plus"></i>
+                            <p>Products</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="icons">
                             <i class="la la-pencil-square"></i>
-                            <p>Ware house & Logistics</p>
+                            <p>Reports & Analytics</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="icons">
+                            <i class="la la-pencil-square"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="icons">
+                            <i class="la la-pencil-square"></i>
+                            <p>Delivery Records</p>
                         </a>
                     </li>
                     <li class="nav-item">
