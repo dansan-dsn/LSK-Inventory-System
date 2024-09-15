@@ -137,42 +137,55 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item <?=($current_page == "receiving.module.php") ? 'active' : "" ?>">
-                        <a href="./receiving.module.php">
-                            <i class="la la-newspaper-o"></i>
-                            <p>Recieving Module</p>
+                    <li class="">
+            <p class="d-inline-flex nav-item" style="padding-bottom: -2rem;">
+                <a  type="button" data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <i class='bx bx-accessibility'></i>
+                    <span>Receiving</span>
+                    <i class="la la-angle-down" style="padding-left: 2.5rem; font-size: 1rem;"></i>
+                </a>
+            </p>
+            <div class="collapse sub-category" id="collapseExample">
+                <ul class="list-unstyled" id="">
+                    <li class="nav-item sub-folder <?= ($current_page == "new-products.php") ? 'active' : '' ?>" >
+                        <a href="new-products.php">
+                            <i class="la la-cart-plus"></i>
+                            <p class="sub-folder">Products Recieved</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="members">
-                            <i class="la la-users"></i>
-                            <p>Stock levels</p>
+                    <li class="nav-item sub-folder <?= ($current_page == "stock.php") ? 'active' : ''?>">
+                        <a href="./stock.php">
+                        <i class="la la-archive"></i>
+                            <p class="sub-folder">Stock Levels</p>
                         </a>
                     </li>
-                    <li class="nav-item <?= ($current_page == "products.php") ? 'active' : ''?>">
-                        <a href="./products.php">
-                        <i class="la la-cart-plus"></i>
-                            <p>Products</p>
+                    <li class="nav-item sub-folder <?= ($current_page == "categories.php") ? 'active' : '' ?>">
+                        <a href="categories.php">
+                            <i class="la la-list"></i>
+                            <p class="sub-folder">Report Analytics</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="icons">
-                            <i class="la la-pencil-square"></i>
-                            <p>Reports & Analytics</p>
+                    <li class="nav-item sub-folder <?= ($current_page == "delivery_records.php") ? 'active' : '' ?>">
+                        <a href="delivery_records.php">
+                            <i class="la la-truck"></i>
+                            <p class="sub-folder">Product Categories</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="icons">
-                            <i class="la la-pencil-square"></i>
-                            <p>Categories</p>
+                    <li class="nav-item sub-folder <?= ($current_page == "delivery_records.php") ? 'active' : '' ?>">
+                        <a href="delivery_records.php">
+                            <i class="la la-truck"></i>
+                            <p class="sub-folder">Delivery Records</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="icons">
-                            <i class="la la-pencil-square"></i>
-                            <p>Delivery Records</p>
+                    <li class="nav-item sub-folder <?= ($current_page == "footere.php") ? 'active' : '' ?>" style="font-family: cursive;">
+                        <a href="footere.php">
+                            <i class="la la-truck"></i>
+                            <p class="sub-folder">Suppliers</p>
                         </a>
                     </li>
+                </ul>
+            </div>
+        </li>
                     <li class="nav-item">
                         <a href="icons">
                         <i class='bx bxs-user-account'></i>

@@ -42,6 +42,14 @@ a .img-logo {
   background-color: rgb(210, 207, 207);
 }
 
+.sub-category {
+  padding-left: 2rem !important;
+}
+
+.sub-folder {
+  font-size: 0.7rem !important;
+}
+
 /* dashboard */
 
 .card-lay {
@@ -72,4 +80,9 @@ nav ul li.active a {
   bottom: 0;
   right: 0;
   margin: 20px;
+}
+
+/* Product */
+.input-bg {
+  background-color: rgb(247, 248, 250) !important;
 }
