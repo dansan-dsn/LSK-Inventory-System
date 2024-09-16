@@ -57,6 +57,12 @@ a .img-logo {
 }
 
 /* Product ------- css */
+
+.hover-sicon:hover {
+  cursor: pointer;
+  background-color: rgb(125, 201, 249) !important;
+}
+
 .hover-dicon:hover {
   cursor: pointer;
   background-color: rgb(205, 42, 42) !important;
