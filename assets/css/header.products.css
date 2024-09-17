@@ -1,4 +1,8 @@
 /* header css */
+.cursor-pointer:hover {
+  cursor: pointer !important;
+}
+
 .active {
   background-color: rgba(230, 230, 230, 0.801) !important;
 }

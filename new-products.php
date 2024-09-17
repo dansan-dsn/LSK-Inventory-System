@@ -3,42 +3,99 @@
 	<div class="content">
 	    <div class="container-fluid">
 <?php
+session_start();
 include './db_connection.php'; 
 
-$product_name = $purchase_order_no = $delivery_order_no = $category = $supplier = $accounting_code = $quantity_received = $units = $location = $description = $message = $success = '';
-
+$product_name = $purchase_order_no = $delivery_order_no = $category = $supplier = $accounting_code = $quantity_received = $units = $location = $description = $success = '';
+$error =[];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $product_name = $_POST['product_name'];
-    $purchase_order_no = $_POST['purchase_order_no'];
-    $delivery_order_no = $_POST['deliverys_order_no'];
-    $category = $_POST['category'];
-    $supplier = $_POST['supplier'];
-    $accounting_code = $_POST['accounting_code'];
-    $quantity_received = $_POST['quantity_received'];
-    $units = $_POST['units'];
-    $location = $_POST['location'];
-    $description = $_POST['description'];
+    $action = $_POST['action'];
+    $error = validateInput($_POST);
 
-    if(empty($product_name) || empty($supplier)) {
-        $message = "Please fill all the required fields";
-    } else {
-        $stmt = $conn->prepare("INSERT INTO product_tb (product_name, purchase_order_no, delivery_order_no, category, supplier, accounting_code, quantity_received, units, `location`, `description`) VALUES (?,?,?,?,?,?,?,?,?,?)");
-
-        if ($stmt) {
-
-            $stmt->bind_param("ssssssisss", $product_name, $purchase_order_no, $delivery_order_no, $category, $supplier, $accounting_code, $quantity_received, $units, $location, $description);
-
-            if ($stmt->execute()) {
-                $success = "Product Added Successfully";
-                $product_name = $purchase_order_no = $delivery_order_no = $category = $supplier = $accounting_code = $quantity_received = $units = $location = $description = '';
+    if (empty($error)) {
+        if($action == 'create') {
+            $result = createProduct($_POST);
+            if($result) {
+                $success = "Product created Successfully";
             } else {
-                $message = "Failed to add Product";
+                $error[] = "Failded to create record";
             }
-            $stmt->close();
+    } elseif ($action == 'edit') {
+        $id = $_POST['id'];
+        $result = updateProduct($id, $_POST);
+        if($result) {
+            $success = "Product successfully updated";
         } else {
-            $message = "Failed to prepare the sql statements.";
+            $error[] = "Failded to update record";
         }
+    }
+}
+}
+
+function validateInput($data) {
+    $error = [];
+
+    if(empty($data['product_name'])) {
+        $error[] = "Product name is required";
+    }
+
+    if(empty($data['category'])) {
+        $error[] = "Category is required";
+    }
+    return $error;
+}
+
+function createProduct($data) {
+    global $conn;
+
+    $stmt = $conn->prepare('INSERT INTO product_tb (product_name, purchase_order_no, delivery_order_no, category, supplier, accounting_code, quantity_received, units, `location`, `description`) VALUES (?,?,?,?,?,?,?,?,?,?)');
+    if ($stmt) {
+        $stmt->bind_param(
+            "ssssssisss",
+            $data['product_name'],
+            $data['purchase_order_no'],
+            $data['delivery_order_no'],
+            $data['category'],
+            $data['supplier'],
+            $data['accounting_code'],
+            $data['quantity_received'],
+            $data['units'],
+            $data['location'],
+            $data['description']
+        );
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function updateProduct($id, $data) {
+    global $conn;
+    $stmt = $conn->prepare('UPDATE product_tb SET product_name=?, purchase_order_no=?, delivery_order_no=?, category=?, supplier=?, accounting_code=?, quantity_received=?, units=?, `location`=?, `description`=? WHERE id=?');
+
+    if($stmt){
+           $stmt->bind_param(
+            "ssssssisssi",
+            $data['product_name'],
+            $data['purchase_order_no'],
+            $data['delivery_order_no'],
+            $data['category'],
+            $data['supplier'],
+            $data['accounting_code'],
+            $data['quantity_received'],
+            $data['units'],
+            $data['location'],
+            $data['description'],
+            $id
+        );
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }else {
+        return false;
     }
 }
 
@@ -47,19 +104,8 @@ $products = "SELECT * FROM product_tb";
 $result = $conn->query($products);
 $index = 1;
 
-// a single product
 
-//  $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-//  $query = $conn->prepare("SELECT * FROM product_tb WHERE id = ?");
-//  $query->bind_param("i", $id);
-//  $query->execute();
-//  $single_result = $query->get_result();
-
-//  if($result->num_rows > 0) {
-//     $product = $result->fetch_assoc();
-//  }
-
+// delete product
 if (isset($_GET['delete_id'])) {
     $delete_id = intval($_GET['delete_id']);  // Ensure delete_id is an integer
 
@@ -78,42 +124,13 @@ if (isset($_GET['delete_id'])) {
     }
 }
 
-// edit product
-// $edit_id = 0;
-// $edit_mode = false;
-
-// if (isset($_GET['edit_id'])) {
-//     $edit_id = intval($_GET['edit_id']);
-//     $edit_mode = true;
-    
-//     $stmt = $conn->prepare("SELECT * FROM product_tb WHERE id = ?");
-//     $stmt->bind_param("i", $edit_id);
-//     $stmt->execute();
-//     $result = $stmt->get_result();
-    
-//     if ($result->num_rows > 0) {
-//         $row = $result->fetch_assoc();
-//         $product_name = $row['product_name'];
-//         $purchase_order_no = $row['purchase_order_no'];
-//         $delivery_order_no = $row['delivery_order_no'];
-//         $category = $row['category'];
-//         $supplier = $row['supplier'];
-//         $accounting_code = $row['accounting_code'];
-//         $quantity_received = $row['quantity_received'];
-//         $units = $row['units'];
-//         $location = $row['location'];
-//         $description = $row['description'];
-//     }
-//     $stmt->close();
-// }
-
 ?>
 
                 <?php if (!empty($success)): ?> 
                     <div class="d-flex justify-content-center row " id="success-m">
                         <p class="bg-success p-2 text-center text-white rounded col-12 col-sm-6 col-md-4"><?php echo htmlspecialchars($success); ?></p>
                     </div>
-                <?php elseif (!empty($message)): ?>
+                <?php elseif (!empty($error)): ?>
                     <div class="d-flex justify-content-center row " id="error-m">
                         <p class="bg-danger p-2 text-center text-white rounded col-12 col-sm-6 col-md-4"><?php echo htmlspecialchars($message); ?></p>
                     </div>
@@ -125,18 +142,19 @@ if (isset($_GET['delete_id'])) {
                 <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm"><span class="fs-5 mx-2">&plus;</span>New Product</button>
             </div>
             <form action="" method="POST" class="collapse border p-3 rounded-4 my-3 input-bg" id="collapseForm">
+                <input type="hidden" name="action" value="create">
                 <div class="row mb-3">
                     <div class="col-md-4 mb-3 mb-md-0 ">
-                        <label for="ProductName" class="form-label" value="<?php echo htmlspecialchars($product_name); ?>" required>Product Name</label>
+                        <label for="ProductName" class="form-label" required>Product Name</label>
                         <input type="text" class="form-control " name="product_name" id="ProductName" placeholder="Product Name" required>
                     </div>
                     <div class="col-md-4 mb-3 mb-md-0">
                         <label for="PurchaseOrderNo" class="form-label">Purchase Order No.</label>
-                        <input type="text" class="form-control" name="purchase_order_no" value="<?php echo htmlspecialchars($purchase_order_no); ?>" id="PurchaseOrder" placeholder="BC34" required>
+                        <input type="text" class="form-control" name="purchase_order_no" id="PurchaseOrder" placeholder="BC34" required>
                     </div>
                     <div class="col-md-4">
                         <label for="DeliveryOrderNo" class="form-label">Delivery Order No.</label>
-                        <input type="text" class="form-control" name="delivery_order_no" value="<?php echo htmlspecialchars($delivery_order_no); ?>" id="DeliveryOrderNo" placeholder="MN234" required>
+                        <input type="text" class="form-control" name="delivery_order_no" id="DeliveryOrderNo" placeholder="MN234" required>
                     </div>
                 </div>
         
@@ -145,9 +163,9 @@ if (isset($_GET['delete_id'])) {
                         <label for="Category" class="form-label" required>Category</label>
                         <select class="form-select" name="category" aria-label="Default select example" id="AccountingCode">
                             <option value=""> -- Select Category -- </option>   
-                            <option value="Electronics" <?php if ($category == "Electronics") echo "selected"; ?>>Electronics</option>
-                            <option value="Furniture" <?php if ($category == "Furniture") echo "selected"; ?>>Furniture</option>
-                            <option value="Clothing" <?php if ($category == "Clothing") echo "selected"; ?>>Clothing</option>
+                            <option value="Electronics" >Electronics</option>
+                            <option value="Furniture" >Furniture</option>
+                            <option value="Clothing">Clothing</option>
                         </select>
                         <!-- <input type="text" class="form-control" id="Category" placeholder="Product category"> -->
                     </div>
@@ -155,18 +173,18 @@ if (isset($_GET['delete_id'])) {
                         <label for="supplier">Supplier</label>
                         <select name="supplier" id="supplier" class="form-select" aria-label="Default select example">
                             <option value=""> -- Select Supplier -- </option>
-                            <option value="Electronics" <?php if ($supplier == "Electronics") echo "selected"; ?>>Electronics</option>
-                            <option value="Furniture" <?php if ($supplier == "Furniture") echo "selected"; ?>>Furniture</option>
-                            <option value="Clothing" <?php if ($supplier == "Clothing") echo "selected"; ?>>Clothing</option>
+                            <option value="Electronics" >Electronics</option>
+                            <option value="Furniture" >Furniture</option>
+                            <option value="Clothing" >Clothing</option>
                         </select>
                     </div>
                     <div class="col-md-4 ">
                         <label for="AccountingCode" class="form-label">Accounting Code</label>
                         <select  class="form-select" name="accounting_code" aria-label="Default select example" id="AccountingCode">
                             <option value="">-- Select Code --</option>
-                            <option value="Electronics" <?php if ($accounting_code == "Electronics") echo "selected"; ?>>Electronics</option>
-                            <option value="Furniture" <?php if ($accounting_code == "Furniture") echo "selected"; ?>>Furniture</option>
-                            <option value="Clothing" <?php if ($accounting_code == "Clothing") echo "selected"; ?>>Clothing</option>
+                            <option value="Electronics" >Electronics</option>
+                            <option value="Furniture" >Furniture</option>
+                            <option value="Clothing" >Clothing</option>
                         </select>
                         <!-- <input type="text" class="form-control" id="AccountingCode" placeholder="Code"> -->
                     </div>
@@ -175,19 +193,19 @@ if (isset($_GET['delete_id'])) {
                 <div class="row mb-3">
                     <div class="col-md-4 mb-3 mb-md-0">
                         <label for="QuantityReceived" class="form-label">Quantity Received</label>
-                        <input type="number" name="quantity_received" value="<?php echo htmlspecialchars($quantity_received) ?>" class="form-control" id="QuantityReceived" placeholder="0" required>
+                        <input type="number" name="quantity_received" class="form-control" id="QuantityReceived" placeholder="0" required>
                     </div>
                     <div class="col-md-4 mb-3 mb-md-0">
                         <label for="Units" class="form-label">Units</label>
-                        <input type="text" name="units" class="form-control" value="<?php echo htmlspecialchars($units) ?>" id="Units" placeholder="0">
+                        <input type="text" name="units" class="form-control" id="Units" placeholder="0">
                     </div>
                     <div class="col-md-4">
                         <label for="Location" class="form-label">Location</label>
                         <select class="form-select" name="location" aria-label="Default select example" id="Location">
                             <option value="">-- Select location--</option>
-                            <option value="Electronics" <?php if ($location == "Electronics") echo "selected"; ?>>Electronics</option>
-                            <option value="Furniture" <?php if ($location == "Furniture") echo "selected"; ?>>Furniture</option>
-                            <option value="Clothing" <?php if ($location == "Clothing") echo "selected"; ?>>Clothing</option>
+                            <option value="Electronics" >Electronics</option>
+                            <option value="Furniture" >Furniture</option>
+                            <option value="Clothing">Clothing</option>
                         </select>
                     </div>
                 </div>
@@ -196,7 +214,7 @@ if (isset($_GET['delete_id'])) {
                     <div class="col-md-9 col-12 mb-3 mb-md-0">
                         <div class="input-group ">
                             <label class="input-group-text" class="form-label">Description</label>
-                            <textarea class="form-control" aria-label="With textarea" name="description" placeholder="More about the product.."><?php echo htmlspecialchars($description); ?></textarea>
+                            <textarea class="form-control" aria-label="With textarea" name="description" placeholder="More about the product.."></textarea>
                         </div>
                     </div>
                     <div class="col-8 col-md-3 mt-2 md-mt-0">
@@ -211,8 +229,9 @@ if (isset($_GET['delete_id'])) {
                         <th scope="col">No</th>
                         <th scope="col" >Product</th>
                         <th scope="col">Supplier</th>
-                        <th scope="col" >Category&#9660;</th>
-                        <th scope="col" class="pointer-cursor">Location&#9660;</th>
+                        <!-- &#x25B4; -->
+                        <th scope="col" class="cursor-pointer" style="cursor: pointer;">Category&#x25BE;</th>
+                        <th scope="col" class="cursor-pointer" style="cursor: pointer;">Location&#x25BE;</th>
                         <th scope="col">Accounting Code</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -285,9 +304,11 @@ if (isset($_GET['delete_id'])) {
                                     </div>
                                     <div class="modal-body">
                                         <form method="POST">
+                                        <input type="hidden" name="action" value="edit">
+                                        <input type="hidden" name="id" value="<?php echo $product['id'];?>">
                                         <div class="d-flex gap-2">
                                             <div class="mb-3 form-floating">
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <input type="text" name="product_name" value="<?php echo htmlspecialchars($product['product_name']); ?>" class="form-control" id="floatingInput" placeholder="product name" >
                                                 <label for="floatingInput">Product Name</label>
                                             </div>
                                             <div class="mb-3 form-floating">

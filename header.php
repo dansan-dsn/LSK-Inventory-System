@@ -155,8 +155,8 @@
                             <p class="sub-folder">Products Recieved</p>
                         </a>
                     </li>
-                    <li class="nav-item sub-folder <?= ($current_page == "stock.php") ? 'active' : ''?>">
-                        <a href="./stock.php">
+                    <li class="nav-item sub-folder <?= ($current_page == "trial.php") ? 'active' : ''?>">
+                        <a href="./trial.php">
                         <i class="la la-archive"></i>
                             <p class="sub-folder">Stock Levels</p>
                         </a>

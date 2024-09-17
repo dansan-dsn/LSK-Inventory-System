@@ -19,7 +19,7 @@
             <div class="row mb-4">
                 <!-- Total Products -->
                 <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="card border-0 shadow-sm h-100 rounded">
+                    <div class="card border-0 shadow-sm h-100 rounded ">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <h5 class="card-title text-primary">Total Products</h5>
                             <h2 class="display-4" id="totalProducts">450</h2>
