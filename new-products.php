@@ -17,31 +17,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if($action == 'create') {
             $result = createProduct($_POST);
             if($result) {
-                $success = "Product created Successfully";
+                $_SESSION['success' ]= "Product created Successfully";
             } else {
-                $error[] = "Failded to create record";
+                $_SESSION['error'][] = "Failded to create record";
             }
     } elseif ($action == 'edit') {
         $id = $_POST['id'];
         $result = updateProduct($id, $_POST);
         if($result) {
-            $success = "Product successfully updated";
+            $_SESSION['success'] = "Product successfully updated";
         } else {
-            $error[] = "Failded to update record";
+            $_SESSION['error'][] = "Failded to update record";
         }
     }
 }
+header("Location: new-products.php");
+exit();
 }
 
 function validateInput($data) {
     $error = [];
 
     if(empty($data['product_name'])) {
-        $error[] = "Product name is required";
+        $_SESSION['error'][] = "Product name is required";
     }
 
     if(empty($data['category'])) {
-        $error[] = "Category is required";
+        $_SESSION['error'][] = "Category is required";
     }
     return $error;
 }
@@ -114,32 +116,45 @@ if (isset($_GET['delete_id'])) {
     if ($delete_stmt) {
         $delete_stmt->bind_param("i", $delete_id);  // Bind the product ID
         if ($delete_stmt->execute()) {
-            $success = "Product deleted successfully";
+           $_SESSION['success'] = "Product deleted successfully";
         } else {
-            $message = "Failed to delete product";
+           $_SESSION['error'] = "Failed to delete product";
         }
         $delete_stmt->close();
     } else {
-        $message = "Failed to prepare the delete SQL statement.";
+        $_SESSION['error'] = "Failed to prepare the delete SQL statement.";
     }
+    header("Location: new-products.php");
+    exit();
 }
-
 ?>
 
-                <?php if (!empty($success)): ?> 
-                    <div class="d-flex justify-content-center row " id="success-m">
-                        <p class="bg-success p-2 text-center text-white rounded col-12 col-sm-6 col-md-4"><?php echo htmlspecialchars($success); ?></p>
+                 
+                    <!-- <div class="d-flex justify-content-center row " id="success-m">
+                        <p class="bg-success p-2 text-center text-white rounded col-12 col-sm-6 col-md-4">
                     </div>
-                <?php elseif (!empty($error)): ?>
                     <div class="d-flex justify-content-center row " id="error-m">
-                        <p class="bg-danger p-2 text-center text-white rounded col-12 col-sm-6 col-md-4"><?php echo htmlspecialchars($message); ?></p>
-                    </div>
-                <?php endif; ?>
+                        <p class="bg-danger p-2 text-center text-white rounded col-12 col-sm-6 col-md-4">
+                    </div>  -->
+                    <?php 
+                    if (isset($_SESSION['success']) && !empty($_SESSION['success'])){
+                        echo "<div class'd-flex justify-content-center alert alert-success row' id='success-m'>
+                        <p class='bg-success p-2 text-center text-white rounded col-12 col-sm-6 col-md-4'>{$_SESSION['success']}</p>
+                        </div>";
+                        unset($_SESSION['success']);
+                    } elseif ((isset($_SESSION['error']) && !empty($_SESSION['error']))) {
+                        echo "<div class'd-flex justify-content-center row' id='error-m'>
+                        <p class='bg-error p-2 text-center text-white rounded col-12 col-sm-6 col-md-4'>{$_SESSION['error']}</p>
+                        </div>";
+                        unset($_SESSION['error']);
+                    }
+                    ?>
+                
 
             <h5 class="">Products</h5>
             <div class="d-flex justify-content-between align-items-center bg-light px-4 p-2 rounded-1">
                 <button class="btn btn-info">Scan OCR</button>
-                <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm"><span class="fs-5 mx-2">&plus;</span>New Product</button>
+                <button class="btn btn-warning fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm"><span class="fs-5 mx-2 text-dark">&plus;</span>New Product</button>
             </div>
             <form action="" method="POST" class="collapse border p-3 rounded-4 my-3 input-bg" id="collapseForm">
                 <input type="hidden" name="action" value="create">
@@ -291,31 +306,32 @@ if (isset($_GET['delete_id'])) {
                             <!-- Edit icon -->
                             <i class='bx bxs-edit-alt px-1 bg-primary text-white p-1 mx-1 rounded hover-eicon' 
                             title="Edit" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editModal"></i>
+                            data-bs-toggle="modal"
+                            data-bs-target="#editModal<?php echo $index?>"></i>
 
                                 <!-- Modal for Edit-->
-                                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="editModal<?php echo $index?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
+                                    <form method="POST" action="">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST">
                                         <input type="hidden" name="action" value="edit">
-                                        <input type="hidden" name="id" value="<?php echo $product['id'];?>">
+                                        <input type="hidden" name="id" value="<?php echo $row['id'];?>">
                                         <div class="d-flex gap-2">
                                             <div class="mb-3 form-floating">
-                                                <input type="text" name="product_name" value="<?php echo htmlspecialchars($product['product_name']); ?>" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <input type="text" name="product_name" value="<?php echo htmlspecialchars($row['product_name']); ?>" class="form-control" id="floatingInput" placeholder="product name" >
                                                 <label for="floatingInput">Product Name</label>
                                             </div>
                                             <div class="mb-3 form-floating">
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
-                                                <label for="floatingInput">Product Name</label>
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="category" name="category" value="<?php echo htmlspecialchars($row['category']); ?>">
+                                                <label for="floatingInput">Category</label>
                                             </div>
                                         </div>
+                                        <button type="submit" class="btn btn-success">Update</button>
                                         </form>
                                     </div>
                                     </div>
