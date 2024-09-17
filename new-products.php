@@ -79,6 +79,35 @@ if (isset($_GET['delete_id'])) {
     }
 }
 
+// edit product
+$edit_id = 0;
+$edit_mode = false;
+
+if (isset($_GET['edit_id'])) {
+    $edit_id = intval($_GET['edit_id']);
+    $edit_mode = true;
+    
+    $stmt = $conn->prepare("SELECT * FROM product_tb WHERE id = ?");
+    $stmt->bind_param("i", $edit_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $product_name = $row['product_name'];
+        $purchase_order_no = $row['purchase_order_no'];
+        $delivery_order_no = $row['delivery_order_no'];
+        $category = $row['category'];
+        $supplier = $row['supplier'];
+        $accounting_code = $row['accounting_code'];
+        $quantity_received = $row['quantity_received'];
+        $units = $row['units'];
+        $location = $row['location'];
+        $description = $row['description'];
+    }
+    $stmt->close();
+}
+
 ?>
 
                 <?php if (!empty($success)): ?> 
@@ -134,7 +163,7 @@ if (isset($_GET['delete_id'])) {
                     </div>
                     <div class="col-md-4 ">
                         <label for="AccountingCode" class="form-label">Accounting Code</label>
-                        <select class="form-select" name="accounting_code" aria-label="Default select example" id="AccountingCode">
+                        <select  class="form-select" name="accounting_code" aria-label="Default select example" id="AccountingCode">
                             <option value="">-- Select Code --</option>
                             <option value="Electronics" <?php if ($accounting_code == "Electronics") echo "selected"; ?>>Electronics</option>
                             <option value="Furniture" <?php if ($accounting_code == "Furniture") echo "selected"; ?>>Furniture</option>
@@ -208,7 +237,7 @@ if (isset($_GET['delete_id'])) {
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title text-primary-emphasis" id="showMoalLabel"><?php echo htmlspecialchars($row['product_name']); ?></h5>
+                                            <h5 class="modal-title text-primary-emphasis text-uppercase" id="showMoalLabel"><?php echo htmlspecialchars($row['product_name']); ?></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             
                                         </div>
@@ -256,15 +285,64 @@ if (isset($_GET['delete_id'])) {
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
-                                        <div class="mb-3">
-                                            <label for="itemName" class="form-label">Item Name</label>
-                                            <input type="text" class="form-control" id="itemName" placeholder="Enter item name">
+                                        <form method="POST">
+                                        <div class="d-flex gap-2">
+                                            <div class="mb-3 form-floating">
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <label for="floatingInput">Product Name</label>
+                                            </div>
+                                            <div class="mb-3 form-floating">
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <label for="floatingInput">Product Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <div class="mb-3 form-floating">
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <label for="floatingInput">Product Name</label>
+                                            </div>
+                                            <div class="mb-3 form-floating">
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <label for="floatingInput">Product Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <div class="mb-3 form-floating">
+                                                <input type="number" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <label for="floatingInput">Quantity Received</label>
+                                            </div>
+                                            <div class="mb-3 form-floating">
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <label for="floatingInput">Units</label>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <div class="mb-3 form-floating">
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
+                                                <label for="floatingInput">Product Name</label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for=""></label>
+                                                <select  class="form-select" name="accounting_code" aria-label="Default select example" id="AccountingCode">
+                                                <option value="">-- Select Code --</option>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="mb-3 form-floating">
+                                                <label for="floatingInput">Received</label>
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="mb-3 form-floating">
+                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" value="<?php echo htmlspecialchars($description); ?>">
+                                                <label for="floatingInput">Description</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">Save</button>
                                         </div>
                                         </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Edit</button>
                                     </div>
                                     </div>
                                 </div>
