@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // all product
 $products = "SELECT * FROM product_tb";
 $result = $conn->query($products);
-
 $index = 1;
 
 // a single product
@@ -80,33 +79,33 @@ if (isset($_GET['delete_id'])) {
 }
 
 // edit product
-$edit_id = 0;
-$edit_mode = false;
+// $edit_id = 0;
+// $edit_mode = false;
 
-if (isset($_GET['edit_id'])) {
-    $edit_id = intval($_GET['edit_id']);
-    $edit_mode = true;
+// if (isset($_GET['edit_id'])) {
+//     $edit_id = intval($_GET['edit_id']);
+//     $edit_mode = true;
     
-    $stmt = $conn->prepare("SELECT * FROM product_tb WHERE id = ?");
-    $stmt->bind_param("i", $edit_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+//     $stmt = $conn->prepare("SELECT * FROM product_tb WHERE id = ?");
+//     $stmt->bind_param("i", $edit_id);
+//     $stmt->execute();
+//     $result = $stmt->get_result();
     
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $product_name = $row['product_name'];
-        $purchase_order_no = $row['purchase_order_no'];
-        $delivery_order_no = $row['delivery_order_no'];
-        $category = $row['category'];
-        $supplier = $row['supplier'];
-        $accounting_code = $row['accounting_code'];
-        $quantity_received = $row['quantity_received'];
-        $units = $row['units'];
-        $location = $row['location'];
-        $description = $row['description'];
-    }
-    $stmt->close();
-}
+//     if ($result->num_rows > 0) {
+//         $row = $result->fetch_assoc();
+//         $product_name = $row['product_name'];
+//         $purchase_order_no = $row['purchase_order_no'];
+//         $delivery_order_no = $row['delivery_order_no'];
+//         $category = $row['category'];
+//         $supplier = $row['supplier'];
+//         $accounting_code = $row['accounting_code'];
+//         $quantity_received = $row['quantity_received'];
+//         $units = $row['units'];
+//         $location = $row['location'];
+//         $description = $row['description'];
+//     }
+//     $stmt->close();
+// }
 
 ?>
 
@@ -296,52 +295,6 @@ if (isset($_GET['edit_id'])) {
                                                 <label for="floatingInput">Product Name</label>
                                             </div>
                                         </div>
-                                        <div class="d-flex gap-2">
-                                            <div class="mb-3 form-floating">
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
-                                                <label for="floatingInput">Product Name</label>
-                                            </div>
-                                            <div class="mb-3 form-floating">
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
-                                                <label for="floatingInput">Product Name</label>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex gap-2">
-                                            <div class="mb-3 form-floating">
-                                                <input type="number" class="form-control" id="floatingInput" placeholder="product name" >
-                                                <label for="floatingInput">Quantity Received</label>
-                                            </div>
-                                            <div class="mb-3 form-floating">
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
-                                                <label for="floatingInput">Units</label>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex gap-2">
-                                            <div class="mb-3 form-floating">
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
-                                                <label for="floatingInput">Product Name</label>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for=""></label>
-                                                <select  class="form-select" name="accounting_code" aria-label="Default select example" id="AccountingCode">
-                                                <option value="">-- Select Code --</option>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="mb-3 form-floating">
-                                                <label for="floatingInput">Received</label>
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" >
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="mb-3 form-floating">
-                                                <input type="text" class="form-control" id="floatingInput" placeholder="product name" value="<?php echo htmlspecialchars($description); ?>">
-                                                <label for="floatingInput">Description</label>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary">Save</button>
-                                        </div>
                                         </form>
                                     </div>
                                     </div>
@@ -388,4 +341,4 @@ if (isset($_GET['edit_id'])) {
             }, 2000);
         }
     });
-</script>
+</script>   
