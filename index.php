@@ -99,8 +99,8 @@
 
             <!-- Detailed Sections -->
             <!-- Detailed Sections -->
-            <div class="row">
-                <!-- Receiving Management -->
+            <!-- <div class="row"> -->
+                <!-- Receiving Management --
                 <div class="col-md-4 mb-4">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <!-- Stock Levels -->
+                Stock Levels
                 <div class="col-md-4 mb-4">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
@@ -120,7 +120,7 @@
                     </div>
                 </div>
 
-                <!-- Products -->
+                Products
                 <div class="col-md-4 mb-4">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
@@ -130,45 +130,45 @@
                     </div>
                 </div>
 
-                <!-- Report and Analysis -->
-                <div class="col-md-4 mb-4">
+                Report and Analysis
+                 <div class="col-md-4 mb-4">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Report and Analysis</h5>
                             <p>Generate detailed reports and analyze various metrics such as sales performance, stock trends, and inventory turnover.</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Delivery Records -->
-                <div class="col-md-4 mb-4">
+                <!-- <div class="col-md-4 mb-4">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Delivery Records</h5>
                             <p>Track delivery details including status, dates, and related information. Maintain accurate records of all deliveries.</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Categories -->
-                <div class="col-md-4 mb-4">
+                <!-- <div class="col-md-4 mb-4">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Categories</h5>
                             <p>Manage product categories, including creation, editing, and organization for better product classification and management.</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Staff Management -->
-                <div class="col-md-4 mb-4">
+                <!-- <div class="col-md-4 mb-4">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Staff Management</h5>
                             <p>Manage staff details, roles, and access levels. Ensure efficient management and organization of staff resources.</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
         </main>
     </div>
 </div>
